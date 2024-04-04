@@ -37,7 +37,6 @@
             transform: translate(-50%, -50%);
             font-size: 24px;
             color: #fff;
-            display: none;
         }
     </style>
 </head>
@@ -62,13 +61,13 @@
         const loadingMessage = document.getElementById('loading-message');
 
         // Hide loading message when videos are loaded
-        video1.addEventListener('canplay', () => {
+        video1.addEventListener('canplaythrough', () => {
 		if (video1.readyState >= 4 && video2.readyState >= 4) {
         		console.log("Both videos can play!");
 			loadingMessage.style.display = 'none';
     		}
         });
-        video2.addEventListener('canplay', () => {
+        video2.addEventListener('canplaythrough', () => {
 		if (video1.readyState >= 4 && video2.readyState >= 4) {
         		console.log("Both videos can play!");
 			loadingMessage.style.display = 'none';
