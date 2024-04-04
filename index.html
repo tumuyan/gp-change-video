@@ -62,11 +62,17 @@
         const loadingMessage = document.getElementById('loading-message');
 
         // Hide loading message when videos are loaded
-        video1.addEventListener('loadeddata', () => {
-            loadingMessage.style.display = 'none';
+        video1.addEventListener('canplay', () => {
+		if (video1.readyState >= 4 && video2.readyState >= 4) {
+        		console.log("Both videos can play!");
+			loadingMessage.style.display = 'none';
+    		}
         });
-        video2.addEventListener('loadeddata', () => {
-            loadingMessage.style.display = 'none';
+        video2.addEventListener('canplay', () => {
+		if (video1.readyState >= 4 && video2.readyState >= 4) {
+        		console.log("Both videos can play!");
+			loadingMessage.style.display = 'none';
+    		}
         });
 
         // Toggle videos based on mouse position
