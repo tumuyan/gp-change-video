@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="长崎素世变脸（仿soyo光栅手机壳）">
+	<meta name="author" content="tumuyan https://github.com/tumuyan/gp-change-video">
+	<meta name="prompt" content="帮我写一个网页，包含两个视频元素，当鼠标在屏幕上的竖直位置在窗口的上半部分时，隐藏视频1.mp4,否则隐藏2.mp4，使用渐变透明动画来切换。播放时填满整个窗口，并且不显示播放器控件。当窗口的长宽比和视频文件不匹配时，裁切视频画面。">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+			position: fixed;
+            transition: opacity 0.3s ease; /* Add a smooth opacity transition */
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <video id="my-video1" autoplay muted loop>
+            <source src="1v.mp4" type="video/mp4">
+        </video>
+        <video id="my-video2" autoplay muted loop>
+            <source src="2.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        const videoElement1 = document.getElementById('my-video1');
+        const videoElement2 = document.getElementById('my-video2');
+        const windowHeight = window.innerHeight;
+
+        // Listen for mouse movement
+        window.addEventListener('mousemove', (event) => {
+            const mouseY = event.clientY;
+            const isTopHalf = mouseY < windowHeight / 2;
+
+            if (isTopHalf) {
+                videoElement2.style.opacity = 1; // Show video 1
+            } else {
+                videoElement2.style.opacity = 0; // Hide video 1
+            }
+        });
+
+        // Resize video to match window size
+        window.addEventListener('resize', () => {
+            const windowWidth = window.innerWidth;
+            const videoAspectRatio = 16 / 9; // Assuming video aspect ratio is 16:9
+
+            if (windowWidth / windowHeight > videoAspectRatio) {
+                // Window is wider than video, crop width
+                videoElement1.style.width = '100%';
+                videoElement1.style.height = 'auto';
+                videoElement2.style.width = '100%';
+                videoElement2.style.height = 'auto';
+            } else {
+                // Window is taller than video, crop height
+                videoElement1.style.width = 'auto';
+                videoElement1.style.height = '100%';
+                videoElement2.style.width = 'auto';
+                videoElement2.style.height = '100%';
+            }
+        });
+    </script>
+</body>
+</html>
